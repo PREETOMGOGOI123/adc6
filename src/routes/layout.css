@@ -1,0 +1,27 @@
+/* add to src/app.css or global styles */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");
+
+
+
+
+@import 'tailwindcss';
+:root {
+    --font-heading: "Oswald", sans-serif;
+    --font-body: "Inter", sans-serif;
+}
+
+
+body {
+    background: #020617; /* slate-950 */
+    color: white;
+}
+
+.font-race-title {
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 0.025em;
+}
+
+.font-race-heading {
+    font-family: "Anton", sans-serif;
+    letter-spacing: 0.02em;
+}
