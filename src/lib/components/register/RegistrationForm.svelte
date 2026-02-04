@@ -5,6 +5,7 @@
 
     let { formData, categories, onNext, onBack } = $props();
 
+
 //https://script.google.com/macros/s/AKfycbzUDUW8zT-UJaAWhXha7KbFfG4QXlX386DdldFVZP31PCbZX0DprWMaMWoDnIIdOkQD/exec
     // ✅ Temporary Submit Handler
     async function handleSubmit() {
@@ -26,6 +27,34 @@
         }
     }
 
+    async function handleUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // ✅ Allowed types
+        const allowedTypes = [
+            "application/pdf",
+            "image/jpeg",
+            "image/png"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            alert("Only PDF, JPG, or PNG files are allowed.");
+            return;
+        }
+
+        // ✅ File size limit (4MB)
+        const maxSizeMB = 4;
+        const maxSizeBytes = maxSizeMB * 1024 * 1024;
+
+        if (file.size > maxSizeBytes) {
+            alert(`File too large! Max allowed size is ${maxSizeMB}MB.`);
+            return;
+        }
+
+        uploading = true
+    }
+
 
 </script>
 
@@ -45,27 +74,33 @@
         <!-- ✅ FORM -->
         <form
                 class="mt-10 space-y-8"
-                on:submit|preventDefault={handleSubmit}
+                onsubmit={handleSubmit}
         >
             <!-- Two Column Grid -->
             <div class="grid md:grid-cols-2 gap-6">
 
                 <!-- Name -->
                 <div>
-                    <label class="block text-black mb-2">Name *</label>
+                    <label for="name" class="block text-black mb-2">Name *</label>
                     <input
+                            id="name"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.name}
                             placeholder="Full Name"
                             required
                     />
+                    <p class="text-sm text-gray-500">
+                        Max file size: 4MB (PDF, JPG, PNG)
+                    </p>
+
                 </div>
 
                 <!-- Email -->
                 <div>
-                    <label class="block text-white/80 mb-2">Email ID *</label>
+                    <label for="email" class="block text-white/80 mb-2">Email ID *</label>
                     <input
                             type="email"
+                            id="email"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.email}
                             placeholder="you@example.com"
@@ -75,9 +110,10 @@
 
                 <!-- Age -->
                 <div>
-                    <label class="block text-white/80 mb-2">Age *</label>
+                    <label for="number" class="block text-white/80 mb-2">Age *</label>
                     <input
                             type="number"
+                            id="number"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.age}
                             placeholder="Age"
@@ -87,8 +123,9 @@
 
                 <!-- Gender -->
                 <div>
-                    <label class="block text-white/80 mb-2">Gender *</label>
+                    <label for="gender" class="block text-white/80 mb-2">Gender *</label>
                     <select
+                            id="gender"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.gender}
                             required
@@ -101,8 +138,9 @@
 
                 <!-- Contact -->
                 <div>
-                    <label class="block text-white/80 mb-2">Contact No *</label>
+                    <label for="contact" class="block text-white/80 mb-2">Contact No *</label>
                     <input
+                            id="contact"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.contact}
                             placeholder="Phone Number"
@@ -112,10 +150,11 @@
 
                 <!-- Emergency -->
                 <div>
-                    <label class="block text-white/80 mb-2">
+                    <label for="emergency" class="block text-white/80 mb-2">
                         Emergency Contact No *
                     </label>
                     <input
+                            id="emergency"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.emergency}
                             placeholder="Emergency Number"
@@ -125,19 +164,40 @@
 
                 <!-- Blood Group -->
                 <div>
-                    <label class="block text-white/80 mb-2">Blood Group *</label>
-                    <input
-                            class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
+                    <label for="blood-group" class="block text-white/80 mb-2">
+                        Blood Group *
+                    </label>
+
+                    <select
+                            id="blood-group"
+                            class="w-full rounded-lg bg-white text-black border border-black/20 p-3"
                             bind:value={formData.blood}
-                            placeholder="e.g. O+"
                             required
-                    />
+                    >
+                        <option value="" disabled selected>
+                            Select your blood group
+                        </option>
+
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
                 </div>
+
 
                 <!-- Category -->
                 <div>
-                    <label class="block text-white/80 mb-2">Race Category *</label>
+                    <label for="race-category" class="block text-white/80 mb-2">Race Category *</label>
                     <select
+                            id="race-category"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.category}
                             required
@@ -151,8 +211,9 @@
 
                 <!-- Bike Type -->
                 <div>
-                    <label class="block text-white/80 mb-2">Bike Type *</label>
+                    <label for="bike-type" class="block text-white/80 mb-2">Bike Type *</label>
                     <select
+                            id="bike-type"
                             class="w-full rounded-lg bg-white text-black border border-black/20 p-3"
                             bind:value={formData.bikeType}
                             required
@@ -165,8 +226,9 @@
 
                 <!-- Food -->
                 <div>
-                    <label class="block text-white/80 mb-2">Food Preference *</label>
+                    <label for="food-preference" class="block text-white/80 mb-2">Food Preference *</label>
                     <select
+                            id="food-preference"
                             class="w-full rounded-lg bg-white text-black border border-black/20 p-3"
                             bind:value={formData.food}
                             required
@@ -179,8 +241,9 @@
 
                 <!-- Jersey -->
                 <div>
-                    <label class="block text-white/80 mb-2">Jersey Size *</label>
+                    <label for="jersey-size" class="block text-white/80 mb-2">Jersey Size *</label>
                     <select
+                            id="jersey-size"
                             class="w-full rounded-lg bg-white text-black border border-black/20 p-3"
                             bind:value={formData.jersey}
                             required
@@ -194,25 +257,71 @@
                 </div>
 
                 <!-- Address Full Width -->
+                <!-- State Dropdown -->
                 <div class="md:col-span-2">
-                    <label class="block text-white/80 mb-2">
-                        Short Address (Locality, Town, State) *
+                    <label for="state" class="block text-white/80 mb-2">
+                        State *
                     </label>
-                    <input
+
+                    <select
+                            id="state"
                             class="w-full rounded-lg bg-white text-black border border-black/20 p-3"
-                            bind:value={formData.address}
-                            placeholder="Locality, Town, State"
+                            bind:value={formData.state}
                             required
-                    />
+                    >
+                        <option value="" disabled selected>
+                            Select your State
+                        </option>
+
+                        <option>Andhra Pradesh</option>
+                        <option>Arunachal Pradesh</option>
+                        <option>Assam</option>
+                        <option>Bihar</option>
+                        <option>Chhattisgarh</option>
+                        <option>Goa</option>
+                        <option>Gujarat</option>
+                        <option>Haryana</option>
+                        <option>Himachal Pradesh</option>
+                        <option>Jharkhand</option>
+                        <option>Karnataka</option>
+                        <option>Kerala</option>
+                        <option>Madhya Pradesh</option>
+                        <option>Maharashtra</option>
+                        <option>Manipur</option>
+                        <option>Meghalaya</option>
+                        <option>Mizoram</option>
+                        <option>Nagaland</option>
+                        <option>Odisha</option>
+                        <option>Punjab</option>
+                        <option>Rajasthan</option>
+                        <option>Sikkim</option>
+                        <option>Tamil Nadu</option>
+                        <option>Telangana</option>
+                        <option>Tripura</option>
+                        <option>Uttar Pradesh</option>
+                        <option>Uttarakhand</option>
+                        <option>West Bengal</option>
+
+                        <!-- Union Territories -->
+                        <option>Andaman and Nicobar Islands</option>
+                        <option>Chandigarh</option>
+                        <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                        <option>Delhi</option>
+                        <option>Lakshadweep</option>
+                        <option>Puducherry</option>
+                        <option>Jammu and Kashmir</option>
+                        <option>Ladakh</option>
+                    </select>
                 </div>
+
             </div>
 
             <div class="flex gap-3 mt-8">
                 <!-- Back -->
                 <button
                         type="button"
-                        on:click={onBack}
-                        class="px-5 py-3 rounded-lg bg-white/10 hover:bg-white/20 transition"
+                        onclick={onBack}
+                        class="px-5 py-3 rounded-lg bg-gray-600/10 hover:bg-white/20 transition"
                 >
                     ← Back
                 </button>
@@ -229,3 +338,17 @@
         </form>
     </div>
 </section>
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+</style>
+

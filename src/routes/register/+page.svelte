@@ -2,7 +2,6 @@
     import RulesStep from "$lib/components/register/RulesStep.svelte";
     import ConsentStep from "$lib/components/register/ConsentStep.svelte";
     import RegistrationForm from "$lib/components/register/RegistrationForm.svelte";
-    import DetailedScheduleStep from "$lib/components/register/DetailedScheduleStep.svelte";
 
     // Wizard Step State
     let step = 1;
