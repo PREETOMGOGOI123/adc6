@@ -31,7 +31,7 @@
             </a>
 
             <a
-                    href="/register"
+                    href="/login"
                     class="text-white/80 hover:text-white transition"
             >
                 Register

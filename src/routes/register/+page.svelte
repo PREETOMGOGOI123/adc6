@@ -1,85 +1,88 @@
 <script>
-    import RulesStep from "$lib/components/register/RulesStep.svelte";
-    import ConsentStep from "$lib/components/register/ConsentStep.svelte";
-    import RegistrationForm from "$lib/components/register/RegistrationForm.svelte";
+    import { goto } from "$app/navigation";
 
-    // Wizard Step State
-    let step = 1;
+    // local state only
+    let rulesChecked = false;
+    let consentChecked = false;
 
-    // Rules Agreement State
-    let agreed = false;
-
-    // Form Data State (Lives Here)
-    let formData = {
-        name: "",
-        email: "",
-        age: "",
-        gender: "",
-        contact: "",
-        emergency: "",
-        blood: "",
-        address: "",
-        category: "",
-        bikeType: "",
-        food: "",
-        jersey: "",
-        // ✅ Always true (flow guarantees agreement)
-        rulesAccepted: true
-
-    };
-
-    // Categories from Poster
-    const categories = [
-        "Men’s Junior (<18 Years)",
-        "Men’s Open",
-        "Women’s Open",
-        "Masters (30+ Years)",
-        "Fastest Hardtail"
-    ];
-
-    // Navigation
-    function next() {
-        step++;
-    }
-
-    function back() {
-        step--
+    function nextStep() {
+        if (rulesChecked && consentChecked) {
+            goto("/register/form");
+        }
     }
 </script>
-<section class="container mx-auto p-4 mt-5">
-    <div
-            class="max-w-3xl mx-auto bg-white/80 border border-white/10 rounded-2xl p-8"
-    >
-        <!-- Page Header -->
-        <h1 class="text-3xl text-black font-bold tracking-wide">
-            ADC 6.0 Registration
-        </h1>
 
-        <p class="text-gray-700 mt-2 leading-7">
-            Monkey Temple Trail Race • Official Entry Process
-        </p>
+<div class="space-y-10">
 
-        <!-- Step Indicator -->
-        <p class="mt-6 text-sm text-gray-700">
-            Step {step} of 4
-        </p>
+    <!-- RULES SECTION -->
+    <div class="space-y-6">
+        <h2 class="text-2xl font-semibold text-gray">
+            📜 Rules & Regulations
+        </h2>
 
-        <!-- Step Renderer -->
-        <div class="mt-10">
-            {#if step === 1}
-                <RulesStep bind:agreed onNext={next} />
+        <ul class="space-y-3 text-lg text-gray-900 leading-8">
+            <li>✅ Full-face helmet (or removable chin guard) is mandatory</li>
+            <li>✅ Knee pads are compulsory and goggles are required</li>
+            <li>✅ Be at the start line at least <b>20 minutes</b> early</li>
+            <li>✅ Protective gear checks will happen before entering the start zone</li>
+            <li>✅ Riders must follow marshal instructions at all times</li>
+            <li>✅ No shortcuts or course cutting — stay within marked tape</li>
+            <li>✅ No pushing, blocking, or unsportsmanlike conduct</li>
+            <li>✅ Riders must complete the full course to appear in results</li>
+            <li>✅ Timed downhill run (<b>1.13 km</b> course)</li>
+            <li>✅ Start interval: <b>40–60 seconds</b> between riders</li>
+            <li>✅ Practice only during official times</li>
+            <li>✅ Bike inspection before each official run is compulsory</li>
+            <li>✅ No sharing bikes, helmets, or safety gear</li>
+            <li>✅ Race director and marshal decisions are final</li>
+        </ul>
 
-            {:else if step === 2}
-                <ConsentStep onNext={next} onBack={back} />
-
-            {:else if step === 3}
-                <RegistrationForm
-                        bind:formData
-                        {categories}
-                        onNext={next}
-                        onBack={back}
-                />
-            {/if}
+        <div class="flex items-start gap-3 mt-4">
+            <input
+                    type="checkbox"
+                    bind:checked={rulesChecked}
+                    class="w-5 h-5 mt-1 accent-blue-500"
+            />
+            <span class="text-lg text-blue-600 font-medium">
+                I agree to all rules & regulations *
+            </span>
         </div>
     </div>
-</section>
+
+    <!-- CONSENT SECTION -->
+    <div class="space-y-5 border-t pt-8">
+        <h2 class="text-2xl font-semibold text-gray">
+            ⚠️ Rider Consent & Liability Waiver
+        </h2>
+
+        <p class="text-lg text-gray-900 leading-8">
+            I understand the risks associated with downhill racing on bicycles
+            and I am aware that the organizers will not undertake any responsibility
+            for any harm that I may endure.
+        </p>
+
+        <div class="flex items-start gap-3 mt-4">
+            <input
+                    type="checkbox"
+                    bind:checked={consentChecked}
+                    class="w-5 h-5 mt-1 accent-blue-500"
+            />
+            <span class="text-lg text-blue-600 font-medium">
+                I understand and accept the above waiver *
+            </span>
+        </div>
+    </div>
+
+    <!-- CONTINUE BUTTON -->
+    <button
+            onclick={nextStep}
+            disabled={!(rulesChecked && consentChecked)}
+            class="w-full py-4 rounded-lg text-lg font-semibold transition
+        {rulesChecked && consentChecked
+            ? 'bg-black text-white hover:scale-[1.02]'
+            : 'bg-gray-300 text-gray-500 cursor-not-allowed'}"
+    >
+        Continue →
+    </button>
+
+</div>

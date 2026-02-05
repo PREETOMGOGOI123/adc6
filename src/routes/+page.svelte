@@ -1,6 +1,5 @@
 <script lang="ts">
     import Text from "$lib/components/ui/text.svelte";
-    import LegacySection from "$lib/components/sections/LegacySection.svelte";
     import AboutAdc from "$lib/components/sections/AboutAdc.svelte";
     import HallOfSections from "$lib/components/sections/HallOfSections.svelte";
 
@@ -153,7 +152,7 @@
                     <!-- Register Button -->
                     <!-- Register Button -->
                     <a
-                            href="/register"
+                            href="/login"
                             class="mt-6 inline-block
          w-fit sm:w-full
          ml-auto sm:ml-0

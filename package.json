@@ -31,6 +31,8 @@
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
-		"bits-ui": "^2.15.5"
+		"bits-ui": "^2.15.5",
+		"mongod": "^2.0.0",
+		"mongodb": "^7.1.0"
 	}
 }

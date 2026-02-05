@@ -4,6 +4,42 @@
 
 
     let { formData, categories, onNext, onBack } = $props();
+    // ✅ Derived filtered categories (Svelte 5 correct way)
+    const filteredCategories = $derived(() => {
+        const age = Number(formData.age);
+        const gender = formData.gender;
+
+        return categories.filter((cat) => {
+            const name = cat.toLowerCase();
+
+            // -------------------------------
+            // RULE 1: Age 18 and Above
+            // Remove Junior categories
+            // -------------------------------
+            if (age >= 18) {
+                if (name.includes("junior")) return false;
+            }
+
+            // -------------------------------
+            // RULE 2: Age Below 18
+            // Remove Women's + Masters
+            // -------------------------------
+            if (age < 18) {
+                if (name.includes("women")) return false;
+                if (name.includes("master")) return false;
+            }
+
+            // -------------------------------
+            // RULE 3: Female Gender Selected
+            // Remove all Men's categories
+            // -------------------------------
+            if (gender === "Female") {
+                if (name.includes("men")) return false;
+            }
+
+            return true;
+        });
+    });
 
 
 //https://script.google.com/macros/s/AKfycbzUDUW8zT-UJaAWhXha7KbFfG4QXlX386DdldFVZP31PCbZX0DprWMaMWoDnIIdOkQD/exec
@@ -25,34 +61,6 @@
             console.error(err);
             alert("Submission failed.");
         }
-    }
-
-    async function handleUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        // ✅ Allowed types
-        const allowedTypes = [
-            "application/pdf",
-            "image/jpeg",
-            "image/png"
-        ];
-
-        if (!allowedTypes.includes(file.type)) {
-            alert("Only PDF, JPG, or PNG files are allowed.");
-            return;
-        }
-
-        // ✅ File size limit (4MB)
-        const maxSizeMB = 4;
-        const maxSizeBytes = maxSizeMB * 1024 * 1024;
-
-        if (file.size > maxSizeBytes) {
-            alert(`File too large! Max allowed size is ${maxSizeMB}MB.`);
-            return;
-        }
-
-        uploading = true
     }
 
 
