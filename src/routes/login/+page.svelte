@@ -20,7 +20,9 @@
                     placeholder="Enter Registration Key (e.g. ADC6-0001)"
                     class="w-full border rounded-xl p-4 text-black"
                     required
+                    oninput={(e) => e.target.value = e.target.value.toUpperCase()}
             />
+
 
             {#if form?.error}
                 <p class="text-red-500 font-semibold text-center">
@@ -39,7 +41,7 @@
         <div class="text-center">
             <button
                     type="button"
-                    on:click={newRegistration}
+                    onclick={newRegistration}
                     class="w-full rounded-xl mt-2 bg-blue-800 font-medium p-2"
             >
                 + New Registration

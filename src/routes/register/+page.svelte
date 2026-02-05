@@ -50,16 +50,68 @@
     </div>
 
     <!-- CONSENT SECTION -->
-    <div class="space-y-5 border-t pt-8">
+    <div class="space-y-6 border-t pt-8">
         <h2 class="text-2xl font-semibold text-gray">
             ⚠️ Rider Consent & Liability Waiver
         </h2>
 
-        <p class="text-lg text-gray-900 leading-8">
-            I understand the risks associated with downhill racing on bicycles
-            and I am aware that the organizers will not undertake any responsibility
-            for any harm that I may endure.
-        </p>
+        <div class="space-y-5 text-lg text-gray-900 leading-8">
+
+            <p class="font-semibold">
+                Assam Downhill Championship – Participant Waiver & Release Form
+            </p>
+
+            <p>
+                <b>Event Name:</b> Assam Downhill Championship<br />
+                <b>Event Type:</b> Mountain Biking / Downhill Race
+            </p>
+
+            <p class="font-semibold">
+                PLEASE READ CAREFULLY BEFORE AGREEING
+            </p>
+
+            <p>
+                <b>1. Acknowledgment of Risk</b><br />
+                I understand that mountain biking and downhill racing involve
+                inherent risks, including but not limited to falls, collisions,
+                equipment failure, weather conditions, terrain hazards, serious
+                injury, permanent disability, or death. I voluntarily choose to
+                participate knowing these risks.
+            </p>
+
+            <p>
+                <b>2. Assumption of Risk</b><br />
+                I freely and voluntarily assume full responsibility for all
+                risks, known and unknown, associated with my participation in
+                this event.
+            </p>
+
+            <p>
+                <b>3. Release of Liability</b><br />
+                I hereby release, waive, discharge, and hold harmless the event
+                organizers, Assam Downhill Championship, sponsors, volunteers,
+                officials, landowners, and any associated individuals or
+                entities from any and all claims, liabilities, demands, or
+                causes of action arising from injury, loss, damage, or death
+                related to my participation.
+            </p>
+
+            <p>
+                <b>4. Indemnification</b><br />
+                I agree to indemnify and hold harmless the organizers from any
+                claims, damages, costs, or expenses arising due to my actions
+                or negligence during the event.
+            </p>
+
+            <p>
+                <b>5. Medical Authorization</b><br />
+                I authorize the event organizers to obtain medical treatment
+                on my behalf in the event of an injury or emergency. I
+                understand that I am responsible for all medical expenses
+                incurred.
+            </p>
+
+        </div>
 
         <div class="flex items-start gap-3 mt-4">
             <input
@@ -68,7 +120,7 @@
                     class="w-5 h-5 mt-1 accent-blue-500"
             />
             <span class="text-lg text-blue-600 font-medium">
-                I understand and accept the above waiver *
+                I have read, understood, and agree to the Rider Consent & Liability Waiver *
             </span>
         </div>
     </div>

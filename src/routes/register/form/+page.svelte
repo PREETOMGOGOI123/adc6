@@ -1,7 +1,8 @@
 <script>
     import { goto } from "$app/navigation";
+    import { indiaStatesAndUTs } from "$lib/data/indiaStates.js";
 
-    let form  = $props()
+    let form = $props();
 
     const categories = [
         "Men’s Junior (<18 Years)",
@@ -21,9 +22,9 @@
 
         <div class="bg-white border border-gray-200 rounded-3xl shadow-sm p-10">
 
-            <!-- ✅ Success Screen -->
             {#if form?.success}
 
+                <!-- ✅ Success Screen -->
                 <div class="text-center space-y-6">
                     <h2 class="text-4xl font-bold text-green-700">
                         Registration Successful 🎉
@@ -51,7 +52,7 @@
 
             {:else}
 
-                <!-- ✅ Registration Form -->
+                <!-- ✅ Header -->
                 <div class="text-center space-y-2">
                     <h1 class="text-4xl font-bold text-gray-900 tracking-tight">
                         ADC 6.0 Registration
@@ -62,137 +63,91 @@
                     </p>
                 </div>
 
+                <!-- ✅ Form -->
                 <form method="POST" class="mt-12 space-y-10 text-gray-800">
 
                     <div class="grid md:grid-cols-2 gap-8">
 
-                        <!-- Name -->
+                        <!-- Full Name -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Full Name *
-                            </label>
-                            <input
-                                    name="name"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            />
+                            <label class="block font-semibold mb-2">Full Name *</label>
+                            <input name="name" required
+                                   class="w-full rounded-xl border border-gray-300 p-4 bg-white" />
                         </div>
 
                         <!-- Email -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Email *
-                            </label>
-                            <input
-                                    name="email"
-                                    type="email"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            />
+                            <label class="block font-semibold mb-2">Email *</label>
+                            <input type="email" name="email" required
+                                   class="w-full rounded-xl border border-gray-300 p-4 bg-white" />
                         </div>
 
                         <!-- Age -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Age *
-                            </label>
-                            <input
-                                    name="age"
-                                    type="number"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            />
+                            <label class="block font-semibold mb-2">Age *</label>
+                            <input type="number" name="age" required
+                                   class="w-full rounded-xl border border-gray-300 p-4 bg-white" />
                         </div>
 
                         <!-- Gender -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Gender *
-                            </label>
-                            <select
-                                    name="gender"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            >
+                            <label class="block font-semibold mb-2">Gender *</label>
+                            <select name="gender" required
+                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white">
                                 <option value="">Select</option>
-                                <option class="text-gray-800">Male</option>
-                                <option class="text-gray-800">Female</option>
+                                <option>Male</option>
+                                <option>Female</option>
                             </select>
                         </div>
 
                         <!-- Contact -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Contact *
-                            </label>
-                            <input
-                                    name="contact"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            />
+                            <label class="block font-semibold mb-2">Contact *</label>
+                            <input name="contact" required
+                                   class="w-full rounded-xl border border-gray-300 p-4 bg-white" />
                         </div>
 
-                        <!-- Emergency -->
+                        <!-- Emergency Contact -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Emergency Contact *
-                            </label>
-                            <input
-                                    name="emergency"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            />
+                            <label class="block font-semibold mb-2">Emergency Contact *</label>
+                            <input name="emergency" required
+                                   class="w-full rounded-xl border border-gray-300 p-4 bg-white" />
                         </div>
 
-                        <!-- Blood -->
+                        <!-- Blood Group -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Blood Group *
-                            </label>
-                            <select
-                                    name="blood"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            >
+                            <label class="block font-semibold mb-2">Blood Group *</label>
+                            <select name="blood" required
+                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white">
                                 <option value="">Select</option>
                                 <option>A+</option>
+                                <option>A-</option>
                                 <option>B+</option>
-                                <option>O+</option>
+                                <option>B-</option>
                                 <option>AB+</option>
+                                <option>AB-</option>
+                                <option>O+</option>
+                                <option>O-</option>
                             </select>
                         </div>
 
-                        <!-- Category (Multiple Select) -->
+                        <!-- Race Category -->
                         <div>
-                            <label class="block font-semibold mb-3 text-gray-800">
-                                Race Categories *
-                            </label>
-
-                            <div class="space-y-2">
+                            <label class="block font-semibold mb-2">Race Category *</label>
+                            <select name="category" required
+                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white">
+                                <option value="">Select Category</option>
                                 {#each categories as cat}
-                                    <label class="flex items-center gap-3 cursor-pointer">
-                                        <input
-                                                type="checkbox"
-                                                name="category"
-                                                value={cat}
-                                                class="w-4 h-4 accent-black"
-                                        />
-                                        <span class="text-gray-800">{cat}</span>
-                                    </label>
+                                    <option value={cat}>{cat}</option>
                                 {/each}
-                            </div>
+                            </select>
                         </div>
 
                         <!-- Bike Type -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Bike Type *
-                            </label>
-                            <select
-                                    name="bikeType"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            >
+                            <label class="block font-semibold mb-2">Bike Type *</label>
+                            <select name="bikeType" required
+                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white">
                                 <option value="">Select</option>
                                 <option>Full Suspension</option>
                                 <option>Hardtail</option>
@@ -201,14 +156,9 @@
 
                         <!-- Food -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Food Preference *
-                            </label>
-                            <select
-                                    name="food"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            >
+                            <label class="block font-semibold mb-2">Food Preference *</label>
+                            <select name="food" required
+                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white">
                                 <option value="">Select</option>
                                 <option>Veg</option>
                                 <option>Non Veg</option>
@@ -217,50 +167,41 @@
 
                         <!-- Jersey -->
                         <div>
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                Jersey Size *
-                            </label>
-                            <select
-                                    name="jersey"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            >
+                            <label class="block font-semibold mb-2">Jersey Size *</label>
+                            <select name="jersey" required
+                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white">
                                 <option value="">Select</option>
-                                <option>S</option>
-                                <option>M</option>
-                                <option>L</option>
-                                <option>XL</option>
+                                <option value="38">38 (S)</option>
+                                <option value="40">40 (M)</option>
+                                <option value="42">42 (L)</option>
+                                <option value="44">44 (XL)</option>
                             </select>
                         </div>
 
                         <!-- State -->
                         <div class="md:col-span-2">
-                            <label class="block font-semibold mb-2 text-gray-800">
-                                State *
-                            </label>
-                            <input
-                                    name="state"
-                                    class="w-full rounded-xl border border-gray-300 p-4 text-gray-800 bg-white"
-                                    required
-                            />
+                            <label class="block font-semibold mb-2">State / Union Territory *</label>
+                            <select name="state" required
+                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white">
+                                <option value="">Select</option>
+                                {#each indiaStatesAndUTs as state}
+                                    <option value={state}>{state}</option>
+                                {/each}
+                            </select>
                         </div>
+
                     </div>
 
                     <!-- Buttons -->
                     <div class="flex gap-4 pt-6 border-t border-gray-200">
-
-                        <button
-                                type="button"
+                        <button type="button"
                                 onclick={onBack}
-                                class="px-6 py-4 rounded-xl bg-gray-800 text-white"
-                        >
+                                class="px-6 py-4 rounded-xl bg-gray-800 text-white">
                             ← Back
                         </button>
 
-                        <button
-                                type="submit"
-                                class="flex-1 px-6 py-4 rounded-xl bg-black text-white font-semibold"
-                        >
+                        <button type="submit"
+                                class="flex-1 px-6 py-4 rounded-xl bg-black text-white font-semibold">
                             Submit Registration →
                         </button>
                     </div>
