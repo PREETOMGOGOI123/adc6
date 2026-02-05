@@ -49,7 +49,7 @@
         <div class="flex items-center gap-4">
             <!-- Instagram -->
             <a
-                    href="https://instagram.com"
+                    href="https://www.instagram.com/assamdownhill/"
                     target="_blank"
                     class="p-3 rounded-full bg-white/10 text-white
                 hover:bg-white hover:text-black transition"
@@ -59,7 +59,7 @@
 
             <!-- Facebook -->
             <a
-                    href="https://facebook.com"
+                    href="https://www.facebook.com/assamdowhill"
                     target="_blank"
                     class="p-3 rounded-full bg-white/10 text-white
                 hover:bg-white hover:text-black transition"
@@ -69,7 +69,7 @@
 
             <!-- WhatsApp -->
             <a
-                    href="https://wa.me/919999999999"
+                    href="https://wa.me/7895210600"
                     target="_blank"
                     class="p-3 rounded-full bg-white/10 text-white
                 hover:bg-white hover:text-black transition"
