@@ -1,9 +1,7 @@
 <script>
     let { data } = $props();
+    import Text from "$lib/components/ui/text.svelte";
 
-    /* =========================
-       PAYMENT STATE (ORIGINAL)
-    ========================= */
     let uploading = $state(false);
     let uploadError = $state("");
     let uploadSuccess = $state(false);
@@ -12,21 +10,14 @@
     const DRIVE_UPLOAD_URL =
         "https://script.google.com/macros/s/AKfycbwNX2g9gh_DAACtpN97JECGwZW2Yq7G79srN12Q02zgJ_XY7Xg2ruSnDXsl-7kM_QCJUw/exec";
 
-    /* =========================
-       CONSENT STATE (NEW ONLY)
-    ========================= */
     let consentUploading = $state(false);
     let consentError = $state("");
     let consentSuccess = $state(false);
     let consentForm;
 
-    // ✅ dummy – you will replace
     const CONSENT_UPLOAD_URL =
         "https://script.google.com/macros/s/AKfycbxE3_dUtsmq2CKd5FuJqLlB2jiSGcrengPYq52dNwDues2u6jRkoPtHJFJ1GIqu4yI/exec";
 
-    /* =========================
-       PAYMENT UPLOAD (UNCHANGED)
-    ========================= */
     async function uploadPaymentProof(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -37,7 +28,6 @@
 
         try {
             const base64 = await fileToBase64(file);
-
             const uploadForm = new FormData();
             uploadForm.append("file", base64);
             uploadForm.append("filename", file.name);
@@ -52,10 +42,7 @@
             if (!result.success) throw new Error();
 
             uploadSuccess = true;
-
-            paymentForm.querySelector('input[name="fileUrl"]').value =
-                result.fileUrl;
-
+            paymentForm.querySelector('input[name="fileUrl"]').value = result.fileUrl;
             paymentForm.requestSubmit();
         } catch {
             uploadError = "Upload failed. Try again.";
@@ -64,9 +51,6 @@
         }
     }
 
-    /* =========================
-       CONSENT UPLOAD (NEW)
-    ========================= */
     async function uploadParentalConsent(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -77,7 +61,6 @@
 
         try {
             const base64 = await fileToBase64(file);
-
             const form = new FormData();
             form.append("file", base64);
             form.append("filename", file.name);
@@ -92,10 +75,7 @@
             if (!result.success) throw new Error();
 
             consentSuccess = true;
-
-            consentForm.querySelector('input[name="consentUrl"]').value =
-                result.fileUrl;
-
+            consentForm.querySelector('input[name="consentUrl"]').value = result.fileUrl;
             consentForm.requestSubmit();
         } catch {
             consentError = "Consent upload failed. Try again.";
@@ -104,66 +84,49 @@
         }
     }
 
-    /* =========================
-       HELPER
-    ========================= */
     function fileToBase64(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = () =>
-                resolve(reader.result.split(",")[1]);
+            reader.onload = () => resolve(reader.result.split(",")[1]);
             reader.onerror = reject;
             reader.readAsDataURL(file);
         });
     }
 </script>
 
-<!-- =========================
-     HIDDEN BACKEND FORMS
-========================= -->
-
-<form
-        method="POST"
-        action="?/markPaymentSuccessful"
-        bind:this={paymentForm}
-        class="hidden"
->
+<!-- Hidden backend forms -->
+<form method="POST" action="?/markPaymentSuccessful" bind:this={paymentForm} class="hidden">
     <input type="hidden" name="fileUrl" />
 </form>
 
-<form
-        method="POST"
-        action="?/submitParentalConsent"
-        bind:this={consentForm}
-        class="hidden"
->
+<form method="POST" action="?/submitParentalConsent" bind:this={consentForm} class="hidden">
     <input type="hidden" name="consentUrl" />
 </form>
 
-<!-- =========================
-     PAGE UI
-========================= -->
+<section class="container mx-auto px-4 py-2 ">
+    <div class="max-w-4xl mx-auto  rounded-3xl p-8 space-y-6">
 
-<section class="container mx-auto px-4 py-10 text-gray-900">
-    <div class="max-w-4xl mx-auto bg-white border rounded-3xl p-8 space-y-6">
+        <Text variant="title">Rider Details</Text>
 
-        <h1 class="text-3xl font-bold">Rider Details</h1>
-
-        <p class="text-lg">
+        <Text variant="body">
             Welcome, <b>{data.rider.name}</b>
-        </p>
+        </Text>
 
-        <!-- REGISTRATION KEY -->
-        <div class="p-4 rounded-xl border bg-gray-50">
-            <p class="text-sm text-gray-600">
-                Save this Registration Key for login
-            </p>
-            <p class="mt-1 text-2xl font-mono font-bold">
-                {data.rider.registrationKey}
-            </p>
+        <!-- Registration Key -->
+        <div class="p-4 rounded-xl  bg-gray-800">
+            <Text variant="label">
+<span class="blink text-red-500  font-bold">
+        Save this Registration Key for login
+    </span>            </Text>
+
+            <Text variant="subtitle">
+                <span class="text-2xl font-mono font-bold">
+                    {data.rider.registrationKey}
+                </span>
+            </Text>
         </div>
 
-        <!-- STATUS -->
+        <!-- Status -->
         <div>
             {#if data.rider.payment_successful}
                 <span class="inline-flex px-4 py-2 rounded-full bg-green-100 text-green-800 font-semibold">
@@ -176,124 +139,183 @@
             {/if}
         </div>
 
-        <!-- RIDER DETAILS -->
+        <!-- Rider Details -->
         <div class="grid md:grid-cols-2 gap-4">
-            <p><b>Email:</b> {data.rider.email}</p>
-            <p><b>Age:</b> {data.rider.age}</p>
-            <p><b>Gender:</b> {data.rider.gender}</p>
-            <p><b>Contact:</b> {data.rider.contact}</p>
-            <p><b>Emergency:</b> {data.rider.emergency}</p>
-            <p><b>Blood Group:</b> {data.rider.blood}</p>
-            <p><b>State:</b> {data.rider.state}</p>
-            <p><b>Category:</b>
+            <Text variant="body"><b>Email:</b> {data.rider.email}</Text>
+            <Text variant="body"><b>Age:</b> {data.rider.age}</Text>
+            <Text variant="body"><b>Gender:</b> {data.rider.gender}</Text>
+            <Text variant="body"><b>Contact:</b> {data.rider.contact}</Text>
+            <Text variant="body"><b>Emergency:</b> {data.rider.emergency}</Text>
+            <Text variant="body"><b>Blood Group:</b> {data.rider.blood}</Text>
+            <Text variant="body"><b>State:</b> {data.rider.state}</Text>
+            <Text variant="body"><b>Category:</b>
                 {Array.isArray(data.rider.category)
                     ? data.rider.category.join(", ")
                     : data.rider.category}
-            </p>
-            <p><b>Bike Type:</b> {data.rider.bikeType}</p>
-            <p><b>Food:</b> {data.rider.food}</p>
-            <p><b>Jersey:</b> {data.rider.jersey}</p>
+            </Text>
+            <Text variant="body"><b>Bike Type:</b> {data.rider.bikeType}</Text>
+            <Text variant="body"><b>Food:</b> {data.rider.food}</Text>
+            <Text variant="body"><b>Jersey:</b> {data.rider.jersey}</Text>
         </div>
 
-        <!-- =========================
-             PARENTAL CONSENT (GATE)
-        ========================= -->
+        <!-- Parental Consent -->
         {#if data.rider.parental_consent_required && !data.rider.parental_consent_submitted}
-            <div class="mt-8 p-6 border rounded-xl bg-orange-50 space-y-6">
-                <h2 class="text-xl font-semibold">
-                    🧾 Parental Consent Required
-                </h2>
+            <div class="mt-8 p-6 border rounded-xl bg-white/10 space-y-6">
+                <!-- Highlight Steps -->
+                <div class="space-y-2">
+                    <Text variant="label">
+        <span class="text-blue-400 font-semibold tracking-wide">
+            How to proceed:
+        </span>
+                    </Text>
+
+                    <Text variant="muted">
+        <span class="text-gray-200">
+            1️⃣ Download the parental consent form
+        </span>
+                    </Text>
+
+                    <Text variant="muted">
+        <span class="text-gray-200">
+            2️⃣ Get it filled and signed by the parent / guardian
+        </span>
+                    </Text>
+
+                    <Text variant="muted">
+        <span class="text-gray-200">
+            3️⃣ Upload the completed form here
+        </span>
+                    </Text>
+
+                    <Text variant="muted">
+        <span class="text-blue-400 font-medium tracking-wide">
+            4️⃣ Payment options will unlock automatically
+        </span>
+                    </Text>
+                </div>
+
+                <Text variant="subtitle">🧾 Parental Consent Required</Text>
 
                 <a
                         href="/parental-consent.pdf"
                         download
-                        class="inline-block px-5 py-3 bg-black text-white rounded-lg"
+                        class="inline-block px-5 py-3 bg-blue-800 hover:scale-101 duration-200 text-white rounded-lg"
                 >
                     Download Consent Form
                 </a>
 
-                <input
-                        type="file"
-                        accept="application/pdf,image/*"
-                        onchange={uploadParentalConsent}
-                        disabled={consentUploading}
-                        class="block w-full border rounded-lg p-3"
-                />
+                <label
+                        class="group flex items-center justify-center gap-3
+           w-full px-5 py-4 rounded-lg
+           border border-blue-500/60
+           text-blue-300 font-semibold
+           cursor-pointer
+           transition
+           hover:bg-blue-500/10 hover:border-blue-400"
+                >
+                    ⬆️ Upload Signed Consent Form
+
+                    <input
+                            type="file"
+                            accept="application/pdf,image/*"
+                            onchange={uploadParentalConsent}
+                            disabled={consentUploading}
+                            class="hidden"
+                    />
+                </label>
+
 
                 {#if consentUploading}
-                    <p class="text-sm text-blue-600">Uploading consent…</p>
+                    <Text variant="muted" class="text-blue-600">
+                        Uploading consent…
+                    </Text>
                 {/if}
 
                 {#if consentSuccess}
-                    <p class="text-sm text-green-600">
+                    <Text variant="muted" class="text-green-600">
                         Consent uploaded ✅ Redirecting…
-                    </p>
+                    </Text>
                 {/if}
 
                 {#if consentError}
-                    <p class="text-sm text-red-600">{consentError}</p>
+                    <Text variant="muted" class="text-red-600">
+                        {consentError}
+                    </Text>
                 {/if}
+
             </div>
         {/if}
 
-        <!-- =========================
-             PAYMENT (UNCHANGED)
-        ========================= -->
-        {#if
-            !data.rider.parental_consent_required ||
-            data.rider.parental_consent_submitted
-        }
+        <!-- Payment -->
+        <!-- Payment -->
+        {#if !data.rider.parental_consent_required || data.rider.parental_consent_submitted}
             {#if !data.rider.payment_successful}
-                <div class="mt-8 p-6 border rounded-xl bg-blue-50 space-y-6">
+                <div class="mt-8 p-6 border rounded-xl bg-white/10 space-y-6">
 
-                    <h2 class="text-xl font-semibold">💳 Payment Pending</h2>
+                    <Text variant="subtitle">💳 Payment Pending</Text>
 
                     <!-- Bank / UPI Details -->
-                    <div class="bg-white border rounded-lg p-4 space-y-2 text-sm text-gray-800">
-                        <p><strong>Account Name:</strong> Tshering Namgyal Lama</p>
-                        <p><strong>Account No:</strong> 110179190001</p>
-                        <p><strong>IFSC:</strong> CNRB0004157</p>
-                        <p><strong>Bank:</strong> Canara Bank</p>
-                        <p><strong>Mobile No:</strong> 7086619320</p>
+                    <div class="border rounded-lg p-4 space-y-2 text-gray-200">
+                        <Text variant="body"><b>Account Name:</b> Tshering Namgyal Lama</Text>
+                        <Text variant="body"><b>Account No:</b> 110179190001</Text>
+                        <Text variant="body"><b>IFSC:</b> CNRB0004157</Text>
+                        <Text variant="body"><b>Bank:</b> Canara Bank</Text>
+                        <Text variant="body"><b>Mobile No:</b> 7086619320</Text>
                     </div>
 
                     <!-- QR Code -->
                     <div class="flex justify-center">
                         <img
                                 src="/images/qr.jpeg"
-                                class="w-48 h-48 rounded-lg border"
+                                class="w-44 h-44 rounded-lg border border-white/20"
                                 alt="Payment QR Code"
                         />
                     </div>
 
-                    <!-- Upload Proof -->
+                    <!-- Upload Button -->
                     <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700">
+                        <Text variant="label">
                             Upload Payment Screenshot *
-                        </label>
+                        </Text>
 
-                        <input
-                                type="file"
-                                accept="image/*"
-                                onchange={uploadPaymentProof}
-                                disabled={uploading}
-                                required
-                                class="block w-full border rounded-lg p-3 bg-white"
-                        />
+                        <label
+                                class="flex items-center justify-center gap-3
+                           w-full px-5 py-4 rounded-lg
+                           border border-blue-500/60
+                           text-blue-300 font-semibold
+                           cursor-pointer
+                           transition
+                           hover:bg-blue-500/10 hover:border-blue-400 duration-500
+                           {uploading ? 'opacity-50 cursor-not-allowed' : ''}"
+                        >
+                            ⬆️ Upload Payment Proof
+
+                            <input
+                                    type="file"
+                                    accept="image/*"
+                                    onchange={uploadPaymentProof}
+                                    disabled={uploading}
+                                    class="hidden"
+                            />
+                        </label>
                     </div>
 
                     {#if uploading}
-                        <p class="text-sm text-blue-600">Uploading…</p>
+                        <Text variant="muted" class="text-blue-400">
+                            Uploading payment proof…
+                        </Text>
                     {/if}
 
                     {#if uploadSuccess}
-                        <p class="text-sm text-green-600">
-                            Upload successful ✅ Redirecting…
-                        </p>
+                        <Text variant="muted" class="text-green-400">
+                            Payment proof uploaded ✅ Redirecting…
+                        </Text>
                     {/if}
 
                     {#if uploadError}
-                        <p class="text-sm text-red-600">{uploadError}</p>
+                        <Text variant="muted" class="text-red-400">
+                            {uploadError}
+                        </Text>
                     {/if}
 
                 </div>
@@ -302,3 +324,24 @@
 
     </div>
 </section>
+<style>
+    .blink {
+        animation: softBlink 1.8s ease-in-out infinite;
+    }
+
+    @keyframes softBlink {
+        0% {
+            opacity: 1;
+            transform: translateX(100%);
+        }
+        50% {
+            opacity: 0.5;
+            transform: translateX(200%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(100%);
+        }
+    }
+
+</style>

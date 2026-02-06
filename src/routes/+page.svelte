@@ -19,7 +19,7 @@
         <div class="hidden md:flex col-span-2 md:col-span-2 flex-col h-auto md:h-full">
             <a
                     href="#"
-                    on:click|preventDefault={toggleZoom}
+                    onclick= {toggleZoom}
                     class="group relative flex flex-col rounded-lg px-4 pb-4 pt-64 flex-grow
                overflow-visible transition hover:z-50"
             >
@@ -185,13 +185,11 @@
                         <div class="sponsor-marquee absolute top-0 left-0 w-full">
                             <p>SpokeHub Racing</p>
                             <p>Trailheads Crew</p>
-                            <p>Whacky Talky</p>
                             <p>Pratiksha</p>
 
                             <!-- Duplicate for smooth loop -->
                             <p>SpokeHub Racing</p>
                             <p>Trailheads Crew</p>
-                            <p>Whacky Talky</p>
                             <p>Pratiksha</p>
                         </div>
                     </div>
