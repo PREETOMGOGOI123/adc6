@@ -253,6 +253,20 @@
                 <div class="mt-8 p-6 border rounded-xl bg-white/10 space-y-6">
 
                     <Text variant="subtitle">💳 Payment Pending</Text>
+                    <!-- Registration Fee -->
+                    <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-400/40">
+                        <Text variant="label" class="text-blue-300">
+                            Registration Fee
+                        </Text>
+                        <div class="p-4 rounded-lg">
+                        <Text variant="title" class="text-blue-400 ">
+                            ₹ 3,000
+                        </Text>
+                        </div>
+                        <Text variant="muted" class="text-gray-300">
+                            (Non-refundable)
+                        </Text>
+                    </div>
 
                     <!-- Bank / UPI Details -->
                     <div class="border rounded-lg p-4 space-y-2 text-gray-200">
