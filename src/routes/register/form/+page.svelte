@@ -98,9 +98,20 @@
                                     type="number"
                                     name="age"
                                     required
+                                    min="10"
                                     class="w-full rounded-xl border border-gray-300 p-4 bg-white mt-2"
+                                    oninput={(e) => {
+            const input = e.currentTarget; // ✅ HTMLInputElement
+            if (input.value && Number(input.value) < 10) {
+                input.setCustomValidity("Rider must be at least 10 years old");
+            } else {
+                input.setCustomValidity("");
+            }
+        }}
                             />
                         </div>
+
+
 
                         <!-- Gender -->
                         <div>
@@ -120,21 +131,34 @@
                         <div>
                             <Text variant="label">Contact *</Text>
                             <input
+                                    type="tel"
                                     name="contact"
                                     required
+                                    maxlength="10"
+                                    inputmode="numeric"
+                                    placeholder="10-digit mobile number"
+                                    title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9"
                                     class="w-full rounded-xl border border-gray-300 p-4 bg-white mt-2"
                             />
                         </div>
+
 
                         <!-- Emergency Contact -->
                         <div>
                             <Text variant="label">Emergency Contact *</Text>
                             <input
+                                    type="tel"
                                     name="emergency"
                                     required
+                                    maxlength="10"
+                                    inputmode="numeric"
+                                    placeholder="10-digit mobile number"
+                                    title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9"
                                     class="w-full rounded-xl border border-gray-300 p-4 bg-white mt-2"
                             />
                         </div>
+
+
 
                         <!-- Blood Group -->
                         <div>

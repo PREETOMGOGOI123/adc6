@@ -1,5 +1,4 @@
 import { connectDB } from "$lib/server/mongo.js";
-import { error } from "@sveltejs/kit";
 
 export async function load() {
     const db = await connectDB();
@@ -7,7 +6,8 @@ export async function load() {
     const riders = await db
         .collection("adc_registrations")
         .find({})
-        .sort({ created_at: -1 })
+        // OLDEST FIRST → first registrant = 1
+        .sort({ createdAt: 1 })
         .toArray();
 
     return {
