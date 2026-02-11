@@ -6,11 +6,11 @@
     let form = $props();
 
     const categories = [
-        "Men’s Junior (<18 Years)",
-        "Men’s Open",
-        "Women’s Open",
-        "Masters (30+ Years)",
-        "Fastest Hardtail"
+        "Men’s Junior (<18 Years) [Full Sus]",
+        "Men’s Open [Full Sus]",
+        "Women’s Open [Full Sus]",
+        "Masters (30+ Years) [Full Sus]",
+        "Hardtail"
     ];
 
     function onBack() {
