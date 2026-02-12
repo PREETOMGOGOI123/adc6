@@ -1,5 +1,6 @@
 import { connectDB } from "$lib/server/mongo";
-import { redirect } from "@sveltejs/kit";
+import { redirect, fail } from "@sveltejs/kit";
+
 
 /* -----------------------------------
    ✅ Generate Random Registration Key
@@ -17,15 +18,42 @@ export const actions = {
         const formData = await request.formData();
         const data = Object.fromEntries(formData.entries());
 
-        //Get all categories
+        // Get all categories
         data.category = formData.getAll("category");
 
-
-        // Convert age properly
+        // Convert age
         data.age = Number(data.age);
 
         // Connect DB
         const db = await connectDB();
+
+        /* -----------------------------------
+           ✅ CHECK IF PHONE ALREADY EXISTS
+        ----------------------------------- */
+        const existing = await db
+            .collection("adc_registrations")
+            .findOne({
+                $or: [
+                    // phone ↔ phone
+                    { contact: data.contact },
+                    { emergency: data.contact },
+
+                    // emergency ↔ phone
+                    { contact: data.emergency },
+                    { emergency: data.emergency },
+
+                    // email
+                    { email: data.email }
+                ]
+            });
+
+        if (existing) {
+            return fail(400, {
+                error: "Phone number or email already registered"
+            });
+        }
+
+
 
         // Generate registration key
         data.registrationKey = generateRegistrationKey();
@@ -39,7 +67,7 @@ export const actions = {
             data.parental_consent_submitted = false;
         }
 
-        // Payment status (system controlled)
+        // Payment status
         data.payment_successful = false;
 
         // Timestamp
@@ -50,7 +78,7 @@ export const actions = {
 
         console.log("✅ Registration Saved:", data.registrationKey);
 
-        // ✅ SERVER-SIDE REDIRECT (FINAL)
+        // Redirect
         throw redirect(303, `/register/${data.registrationKey}`);
     }
 };

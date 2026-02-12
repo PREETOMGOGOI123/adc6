@@ -3,7 +3,7 @@
     import { indiaStatesAndUTs } from "$lib/data/indiaStates.js";
     import Text from "$lib/components/ui/text.svelte";
 
-    let form = $props();
+    let {form} = $props();
 
     const categories = [
         "Men’s Junior (<18 Years) [Full Sus]",
@@ -66,6 +66,12 @@
                         Monkey Temple Trail Race • Official Entry Form
                     </Text>
                 </div>
+
+                {#if form?.error}
+                    <div class="mb-6 rounded-xl bg-red-100 text-red-800 p-4 font-medium">
+                        {form.error}
+                    </div>
+                {/if}
 
                 <!-- ✅ Form -->
                 <form method="POST" class="mt-12 space-y-10 text-gray-800">
