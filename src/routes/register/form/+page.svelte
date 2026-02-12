@@ -16,6 +16,8 @@
     function onBack() {
         goto("/register");
     }
+
+
 </script>
 
 <section class="container mx-auto px-4">
@@ -128,34 +130,58 @@
                         </div>
 
                         <!-- Contact -->
+                        <!-- Contact -->
                         <div>
                             <Text variant="label">Contact *</Text>
-                            <input
-                                    type="tel"
-                                    name="contact"
-                                    required
-                                    maxlength="10"
-                                    inputmode="numeric"
-                                    placeholder="10-digit mobile number"
-                                    title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9"
-                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white mt-2"
-                            />
-                        </div>
 
+                            <div class="relative mt-2">
+                                <!-- Prefix -->
+                                <span
+                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                                >
+            +91
+        </span>
+
+                                <!-- Input -->
+                                <input
+                                        type="tel"
+                                        name="contact"
+                                        required
+                                        maxlength="10"
+                                        inputmode="numeric"
+                                        class="w-full rounded-xl border border-gray-300 p-4 pl-14 bg-white"
+                                        oninput={(e) => {
+                e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "");
+            }}
+                                />
+                            </div>
+                        </div>
 
                         <!-- Emergency Contact -->
                         <div>
                             <Text variant="label">Emergency Contact *</Text>
-                            <input
-                                    type="tel"
-                                    name="emergency"
-                                    required
-                                    maxlength="10"
-                                    inputmode="numeric"
-                                    placeholder="10-digit mobile number"
-                                    title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9"
-                                    class="w-full rounded-xl border border-gray-300 p-4 bg-white mt-2"
-                            />
+
+                            <div class="relative mt-2">
+                                <!-- Prefix -->
+                                <span
+                                        class="absolute left-4 inset-y-0 flex items-center text-gray-500 pointer-events-none"
+                                >
+            +91
+        </span>
+
+                                <!-- Input -->
+                                <input
+                                        type="tel"
+                                        name="emergency"
+                                        required
+                                        maxlength="10"
+                                        inputmode="numeric"
+                                        class="w-full rounded-xl border border-gray-300 p-4 pl-14 bg-white"
+                                        oninput={(e) => {
+                e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "");
+            }}
+                                />
+                            </div>
                         </div>
 
 

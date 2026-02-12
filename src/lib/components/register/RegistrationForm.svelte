@@ -151,7 +151,7 @@
                             id="contact"
                             class="w-full rounded-lg bg-white text-black placeholder:text-black/50 border border-black/20 p-3"
                             bind:value={formData.contact}
-                            placeholder="Phone Number"
+                            placeholder="Enter phone number without +91"
                             required
                     />
                 </div>

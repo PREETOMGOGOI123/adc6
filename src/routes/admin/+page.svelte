@@ -104,6 +104,8 @@
             <tr>
                 <th class="px-6 py-4">#</th>
                 <th class="px-6 py-4">Name</th>
+                <th class="px-6 py-4">Contact</th>
+                <th class="px-6 py-4">State</th>
                 <th class="px-6 py-4">Gender</th>
                 <th class="px-6 py-4">Reg Key</th>
                 <th class="px-6 py-4">Category</th>
@@ -128,6 +130,15 @@
                     <!-- NAME -->
                     <td class="px-6 py-4 text-lg font-semibold">
                         {rider.name}
+                    </td>
+                    <!--CONTACT-->
+                    <td class="px-6 py-4">
+                        {rider.contact}
+                    </td>
+
+                    <!--State-->
+                    <td class="px-6 py-4">
+                        {rider.state}
                     </td>
 
                     <!-- GENDER -->
