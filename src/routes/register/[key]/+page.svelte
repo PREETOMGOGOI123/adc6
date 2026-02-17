@@ -92,6 +92,10 @@
             reader.readAsDataURL(file);
         });
     }
+
+    $effect(()=>{
+        console.log(data.rider.category)
+    })
 </script>
 
 <!-- Hidden backend forms -->
@@ -148,11 +152,10 @@
             <Text variant="body"><b>Emergency:</b> {data.rider.emergency}</Text>
             <Text variant="body"><b>Blood Group:</b> {data.rider.blood}</Text>
             <Text variant="body"><b>State:</b> {data.rider.state}</Text>
-            <Text variant="body"><b>Category:</b>
-                {Array.isArray(data.rider.category)
-                    ? data.rider.category.join(", ")
-                    : data.rider.category}
+            <Text variant="body">
+                <b>Category:</b> {data.rider.category?.[0] ?? "—"}
             </Text>
+
             <Text variant="body"><b>Bike Type:</b> {data.rider.bikeType}</Text>
             <Text variant="body"><b>Food:</b> {data.rider.food}</Text>
             <Text variant="body"><b>Jersey:</b> {data.rider.jersey}</Text>
